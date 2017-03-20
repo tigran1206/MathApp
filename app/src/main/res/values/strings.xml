@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MathTestApp</string>
+    <string name="title_text">Define the node set A. For the exactness you need to define count nodes</string>
+</resources>

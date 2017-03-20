@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/vertex_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="V1"
+        android:textSize="16dp"
+        android:layout_marginLeft="15dp"
+        android:textColor="#e66d6d"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingRight="10dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/vertex_number"
+        android:layout_marginLeft="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="x = "
+                android:textSize="22dp"/>
+
+            <EditText
+                android:id="@+id/xEt"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:background="@drawable/bordered_white_rectangle"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="4dp"
+                android:layout_marginLeft="5dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="y = "
+                android:textSize="22dp"/>
+
+            <EditText
+                android:id="@+id/yEt"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:background="@drawable/bordered_white_rectangle"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="4dp"
+                android:layout_marginLeft="5dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:layout_alignParentBottom="true"
+        android:background="#000000"/>
+
+</RelativeLayout>
