@@ -16,7 +16,6 @@ import com.example.tigranhovhannisyan.mathtestapp.Model.TriangleStrip;
 public class ResultActivity extends AppCompatActivity {
 
     TriangleStrip triangleStrip;
-    TextView textView;
     RecyclerView recyclerView;
     TrianglesInfoAdapter infoAdapter;
 
@@ -65,5 +64,14 @@ public class ResultActivity extends AppCompatActivity {
             }
         }
     }
+
+    public boolean testRecursion(TriangleStrip triangleStrip){
+        if(triangleStrip.isBasic()) {
+            //ToDo check poisedness of basic subproblem
+            return true;
+        }
+        return false;
+    }
+
 
 }

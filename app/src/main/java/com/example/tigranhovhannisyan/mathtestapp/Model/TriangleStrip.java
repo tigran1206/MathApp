@@ -53,8 +53,11 @@ public class TriangleStrip implements Serializable{
     }
 
     public void divideByBasicProblem(int start, int end) {
+
+    }
+
+    private void createLeftStrip(int start) {
         List<Triangle> leftTriangles = new ArrayList<>();
-        List<Triangle> rightTriangles = new ArrayList<>();
 
         for (int i = 0; i < start; i++){
             leftTriangles.add(this.triangles.get(i));
@@ -71,9 +74,15 @@ public class TriangleStrip implements Serializable{
 
         rightSideTriangle.addVertexNodes();
         TriangleStrip leftStrip = new TriangleStrip(leftTriangles);
-        int a = 24;
-        a++;
+    }
 
+    private void createRightStrip(){
+        //ToDo
+    }
+
+    public boolean isBasic(){
+        //ToDo
+        return false;
     }
 
 }
