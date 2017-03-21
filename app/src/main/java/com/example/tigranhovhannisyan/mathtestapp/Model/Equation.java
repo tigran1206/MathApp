@@ -26,7 +26,7 @@ public class Equation implements Serializable{
         define(p1, p2);
     }
 
-    private void define(Point p1, Point p2){
+    public void define(Point p1, Point p2){
         coefficient = (p2.y - p1.y) / (p2.x - p1.x);
         offset = p1.y - coefficient * p1.x;
 

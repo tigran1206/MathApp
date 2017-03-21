@@ -1,5 +1,6 @@
 package com.example.tigranhovhannisyan.mathtestapp.Model;
 
+import com.example.tigranhovhannisyan.mathtestapp.MathUtils;
 import com.example.tigranhovhannisyan.mathtestapp.Model.Point;
 import com.example.tigranhovhannisyan.mathtestapp.Model.Triangle;
 
@@ -82,6 +83,76 @@ public class TriangleStrip implements Serializable{
 
     public boolean isBasic(){
         //ToDo
+        for(int i = 0; i < getTriangles().size(); i++) {
+            Triangle triangle = getTriangles().get(i);
+            if(triangle.getNodesCount() == 2) {
+
+            }
+        }
+        return false;
+    }
+
+    public void findBasicSubproblem() {
+        int startIndex = -1;
+        int endIndex = -1;
+
+        for(int i = 0; i < getTriangles().size(); i++) {
+            Triangle triangle = getTriangles().get(i);
+            if(triangle.getNodesCount() == 2) {
+                if(startIndex != -1) {
+                    endIndex = i;
+                    if(isIntersepted(startIndex, endIndex) != -1) {
+                        extractBasicSubProblem(startIndex, endIndex);
+                    } else {
+                        //ToDo founded
+                    }
+                }
+                startIndex = i;
+            } else if(triangle.getNodesCount() != 1){
+                startIndex = -1;
+                endIndex = -1;
+            }
+        }
+    }
+
+    public int isIntersepted(int start, int end) {
+        Triangle leftTriangle = getTriangles().get(start);
+        Triangle rightTriangle = getTriangles().get(end);
+
+        Equation equation1 = new Equation(leftTriangle.getVertex2(), leftTriangle.getVertex3());
+        Equation equation2 = new Equation(leftTriangle.getNodes().get(0), leftTriangle.getNodes().get(1));
+
+        Point interPoint = MathUtils.findIntersactionPoint(equation1, equation2);
+        if(leftTriangle.containsPoint(interPoint)){
+            return start;
+        } else {
+            equation1.define(rightTriangle.getVertex1(), rightTriangle.getVertex2());
+            equation2.define(rightTriangle.getNodes().get(0), rightTriangle.getNodes().get(1));
+
+            interPoint = MathUtils.findIntersactionPoint(equation1, equation2);
+            if(rightTriangle.containsPoint(interPoint)){
+                return end;
+            }
+        }
+        return -1;
+    }
+
+    public boolean extractBasicSubProblem(int start, int end){
+        if(end - start == 0) {
+            Triangle triangle = getTriangles().get(end);
+            if(triangle.isCollinear()){
+                //problem solved with false result
+            } else {
+                //return end, start
+            }
+        }
+
+        int result = isIntersepted(start, end);
+        if(isIntersepted(end, start) == -1) {
+            //return end, start
+        } else {
+
+        }
         return false;
     }
 

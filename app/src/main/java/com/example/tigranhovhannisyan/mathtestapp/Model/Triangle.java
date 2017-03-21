@@ -1,5 +1,7 @@
 package com.example.tigranhovhannisyan.mathtestapp.Model;
 
+import android.util.Log;
+
 import com.example.tigranhovhannisyan.mathtestapp.MathUtils;
 import com.example.tigranhovhannisyan.mathtestapp.Model.Point;
 
@@ -57,6 +59,19 @@ public class Triangle implements Serializable {
     public void addVertexNodes(){
         nodes.add(getVertex2());
         nodes.add(getVertex3());
+    }
+
+    public boolean isCollinear() {
+        Equation equation = new Equation(getNodes().get(0), getNodes().get(1));
+        if(equation.pointSatisfies(getNodes().get(2))){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void performLineTransformation() {
+
     }
 
     public Point getVertex1() {

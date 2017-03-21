@@ -68,6 +68,7 @@ public class ResultActivity extends AppCompatActivity {
     public boolean testRecursion(TriangleStrip triangleStrip){
         if(triangleStrip.isBasic()) {
             //ToDo check poisedness of basic subproblem
+            //if basic problem, return poisedness of basic subproblem
             return true;
         }
         return false;
