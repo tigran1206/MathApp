@@ -60,7 +60,7 @@ public class ResultActivity extends AppCompatActivity {
                     Log.d("result", "are collinear");
                 } else {
                     triangleStrip.divideByBasicProblem(i, 0);
-                    Log.d("result", "arent collinear");
+                    return;
                 }
             }
         }
