@@ -98,10 +98,18 @@ public class TriangleStrip implements Serializable{
             if(triangle.getNodesCount() == 2) {
                 if(indexPair.getStart() != -1) {
                     indexPair.setEnd(i);
-                    if(isIntersepted(indexPair.getStart(), indexPair.getEnd()) != -1) {
+                    int interIndex  = isIntersepted(indexPair.getStart(), indexPair.getEnd());
+
+                    if(interIndex != -1) {
                         extractBasicSubProblem(indexPair.getStart(), indexPair.getEnd());
+//                        if(indexPair.getStart() == interIndex){
+//
+//                        } else {
+//
+//                        }
                     } else {
                         //ToDo founded
+                        return indexPair;
                     }
                 }
                 indexPair.setStart(i);
@@ -120,14 +128,14 @@ public class TriangleStrip implements Serializable{
         Equation equation2 = new Equation(leftTriangle.getNodes().get(0), leftTriangle.getNodes().get(1));
 
         Point interPoint = MathUtils.findIntersactionPoint(equation1, equation2);
-        if(leftTriangle.containsPoint(interPoint)){
+        if(interPoint != null && leftTriangle.containsPoint(interPoint)) {
             return start;
         } else {
             equation1.define(rightTriangle.getVertex1(), rightTriangle.getVertex2());
             equation2.define(rightTriangle.getNodes().get(0), rightTriangle.getNodes().get(1));
 
             interPoint = MathUtils.findIntersactionPoint(equation1, equation2);
-            if(rightTriangle.containsPoint(interPoint)){
+            if(interPoint != null && rightTriangle.containsPoint(interPoint)) {
                 return end;
             }
         }
