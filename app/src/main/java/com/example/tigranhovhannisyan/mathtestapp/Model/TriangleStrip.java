@@ -1,8 +1,6 @@
 package com.example.tigranhovhannisyan.mathtestapp.Model;
 
 import com.example.tigranhovhannisyan.mathtestapp.MathUtils;
-import com.example.tigranhovhannisyan.mathtestapp.Model.Point;
-import com.example.tigranhovhannisyan.mathtestapp.Model.Triangle;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -92,27 +90,26 @@ public class TriangleStrip implements Serializable{
         return false;
     }
 
-    public void findBasicSubproblem() {
-        int startIndex = -1;
-        int endIndex = -1;
+    public IndexPair findBasicSubproblem() {
+        IndexPair indexPair = new IndexPair();
 
         for(int i = 0; i < getTriangles().size(); i++) {
             Triangle triangle = getTriangles().get(i);
             if(triangle.getNodesCount() == 2) {
-                if(startIndex != -1) {
-                    endIndex = i;
-                    if(isIntersepted(startIndex, endIndex) != -1) {
-                        extractBasicSubProblem(startIndex, endIndex);
+                if(indexPair.getStart() != -1) {
+                    indexPair.setEnd(i);
+                    if(isIntersepted(indexPair.getStart(), indexPair.getEnd()) != -1) {
+                        extractBasicSubProblem(indexPair.getStart(), indexPair.getEnd());
                     } else {
                         //ToDo founded
                     }
                 }
-                startIndex = i;
+                indexPair.setStart(i);
             } else if(triangle.getNodesCount() != 1){
-                startIndex = -1;
-                endIndex = -1;
+                indexPair.release();
             }
         }
+        return indexPair;
     }
 
     public int isIntersepted(int start, int end) {
