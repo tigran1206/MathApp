@@ -13,6 +13,16 @@ public class IndexPair {
         end = -1;
     }
 
+    public int getFirstIndex() {
+        if(start != -1){
+            return start;
+        }
+        if(end != -1){
+            return end;
+        }
+        return -1;
+    }
+
     public void setEnd(int end) { this.end = end; }
 
     public void setStart(int start) { this.start = start; }
