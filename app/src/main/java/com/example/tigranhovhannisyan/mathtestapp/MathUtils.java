@@ -19,6 +19,10 @@ public class MathUtils {
 
     //Todo check zugaher
     public static Point findIntersactionPoint(Equation equation1, Equation equation2) {
+        if(equation1.getCoefficient() == equation2.getCoefficient()){
+            return null;
+        }
+
         double x = (equation2.getOffset() - equation1.getOffset()) / (equation1.getCoefficient() - equation2.getCoefficient());
         double y = equation1.calculateValue(x);
 

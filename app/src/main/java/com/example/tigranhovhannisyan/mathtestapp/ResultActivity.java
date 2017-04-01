@@ -58,7 +58,7 @@ public class ResultActivity extends AppCompatActivity {
                 if(equation.pointSatisfies(triangle.getNodes().get(2))){
                     Log.d("result", "are collinear");
                 } else {
-                    triangleStrip.divideByBasicProblem(i, 0);
+                    triangleStrip.divideByBasicProblem(i, i);
                     return;
                 }
             }
