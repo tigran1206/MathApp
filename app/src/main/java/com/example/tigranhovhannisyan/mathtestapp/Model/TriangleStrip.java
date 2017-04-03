@@ -1,5 +1,7 @@
 package com.example.tigranhovhannisyan.mathtestapp.Model;
 
+import android.util.Log;
+
 import com.example.tigranhovhannisyan.mathtestapp.MathUtils;
 
 import java.io.Serializable;
@@ -95,22 +97,23 @@ public class TriangleStrip implements Serializable{
 
         for(int i = 0; i < getTriangles().size(); i++) {
             Triangle triangle = getTriangles().get(i);
+
+            if(triangle.getNodesCount() > 3) {
+                return null;
+            } else if(triangle.getNodesCount() == 3) {
+                Equation equation = new Equation(triangle.getNodes().get(0), triangle.getNodes().get(1));
+                if(equation.pointSatisfies(triangle.getNodes().get(2))){
+                    return null;
+                } else {
+                    indexPair.setStart(i);
+                    indexPair.setEnd(i);
+                }
+            }
+
             if(triangle.getNodesCount() == 2) {
                 if(indexPair.getStart() != -1) {
                     indexPair.setEnd(i);
-                    //int interIndex  = isIntersepted(indexPair.getStart(), indexPair.getEnd());
-
-                    //if(interIndex != -1) {
                     return extractBasicSubProblem(indexPair);
-//                        if(indexPair.getStart() == interIndex){
-//
-//                        } else {
-//
-//                        }
-                    //} else {
-                        //ToDo founded
-                    //    return indexPair;
-                    //}
                 }
                 indexPair.setStart(i);
             } else if(triangle.getNodesCount() != 1){
@@ -120,7 +123,9 @@ public class TriangleStrip implements Serializable{
         return indexPair;
     }
 
-    public int isIntersepted(IndexPair indexPair) {
+    public IndexPair isIntersepted(IndexPair indexPair) {
+        IndexPair pair = new IndexPair();
+
         Triangle leftTriangle = getTriangles().get(indexPair.getStart());
         Triangle rightTriangle = getTriangles().get(indexPair.getEnd());
 
@@ -128,36 +133,48 @@ public class TriangleStrip implements Serializable{
         Equation equation2 = new Equation(leftTriangle.getNodes().get(0), leftTriangle.getNodes().get(1));
 
         Point interPoint = MathUtils.findIntersactionPoint(equation1, equation2);
+        //insist of calling containsPoint method we can check it with another simple algorithm
         if(interPoint != null && leftTriangle.containsPoint(interPoint)) {
-            return indexPair.getStart();
+            pair.setStart(indexPair.getStart());
+            pair.setLeftInterPoint(interPoint);
         } else {
             equation1.define(rightTriangle.getVertex1(), rightTriangle.getVertex2());
             equation2.define(rightTriangle.getNodes().get(0), rightTriangle.getNodes().get(1));
 
             interPoint = MathUtils.findIntersactionPoint(equation1, equation2);
             if(interPoint != null && rightTriangle.containsPoint(interPoint)) {
-                return indexPair.getEnd();
+                pair.setEnd(indexPair.getEnd());
+                pair.setRightInterPoint(interPoint);
             }
         }
-        return -1;
+        return pair;
     }
 
-    public IndexPair extractBasicSubProblem(IndexPair indexPair){
-        if(indexPair.getStart() - indexPair.getEnd() == 0) {
+    public IndexPair extractBasicSubProblem(IndexPair indexPair) {
+        if(indexPair.getLength() == 0) {
             Triangle triangle = getTriangles().get(indexPair.getEnd());
             if(triangle.isCollinear()) {
                 //the problem finished with false
                 return null;
             } else {
                 //return end, start
+                return indexPair;
             }
         }
-
-        int index = isIntersepted(indexPair);
-        if(index == -1) {
+        //we have a case with 2+2
+        IndexPair interPair = isIntersepted(indexPair);
+        if(interPair.isEmpty()) {
             return indexPair;
         } else {
-            return indexPair;
+            if(interPair.getStart() != -1) {
+                getTriangles().get(indexPair.getStart()).performLineTransformation(interPair.getLeftInterPoint());
+                indexPair.increment();
+            }
+            if(indexPair.getEnd() != -1) {
+                getTriangles().get(indexPair.getEnd()).performLineTransformation(interPair.getRightInterPoint());
+                indexPair.decrement();
+            }
+            return extractBasicSubProblem(indexPair);
         }
     }
 

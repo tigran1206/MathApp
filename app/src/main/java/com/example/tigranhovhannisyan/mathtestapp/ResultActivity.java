@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.example.tigranhovhannisyan.mathtestapp.Model.Equation;
+import com.example.tigranhovhannisyan.mathtestapp.Model.IndexPair;
 import com.example.tigranhovhannisyan.mathtestapp.Model.Triangle;
 import com.example.tigranhovhannisyan.mathtestapp.Model.TriangleStrip;
 
@@ -45,24 +46,12 @@ public class ResultActivity extends AppCompatActivity {
         processStrip(triangleStrip);
     }
 
-    private void processStrip(TriangleStrip triangleStrip) {
-
-        for(int i = 0; i < triangleStrip.getTriangles().size(); i++){
-            Triangle triangle = triangleStrip.getTriangles().get(i);
-
-            if(triangle.getNodesCount() > 3) {
-                //return false
-            } else if(triangle.getNodesCount() == 3) {
-                //check if the nodes are collinear
-                Equation equation = new Equation(triangle.getNodes().get(0), triangle.getNodes().get(1));
-                if(equation.pointSatisfies(triangle.getNodes().get(2))){
-                    Log.d("result", "are collinear");
-                } else {
-                    triangleStrip.divideByBasicProblem(i, i);
-                    return;
-                }
-            }
+    private boolean processStrip(TriangleStrip triangleStrip) {
+        IndexPair indexPair = triangleStrip.findBasicSubproblem();
+        if(indexPair == null || indexPair.isEmpty()){
+            return false;
         }
+        return false;
     }
 
     public boolean testRecursion(TriangleStrip triangleStrip){

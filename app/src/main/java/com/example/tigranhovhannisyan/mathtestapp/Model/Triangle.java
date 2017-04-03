@@ -70,8 +70,11 @@ public class Triangle implements Serializable {
         }
     }
 
-    public void performLineTransformation() {
-
+    public void performLineTransformation(Point interPoint) {
+        if(nodes.size() == 2){
+            int index = nodes.get(0).x >= nodes.get(1).x ? 0 : 1;
+            nodes.set(index, interPoint);
+        }
     }
 
     public Point getVertex1() {

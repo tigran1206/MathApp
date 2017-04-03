@@ -5,23 +5,44 @@ package com.example.tigranhovhannisyan.mathtestapp.Model;
  */
 
 public class IndexPair {
-    int start = -1;
-    int end = -1;
+    private int start = -1;
+    private int end = -1;
 
-    public void release(){
+    private Point leftInterPoint;
+    private Point rightInterPoint;
+
+    public void release() {
         start = -1;
         end = -1;
     }
 
-    public int getFirstIndex() {
-        if(start != -1){
-            return start;
-        }
-        if(end != -1){
-            return end;
-        }
-        return -1;
+    public boolean isEmpty(){
+        return start == -1 && end == -1;
     }
+
+    public int getLength(){
+        return end - start;
+    }
+
+    public void increment(){
+        start ++;
+    }
+
+    public void decrement(){
+        end --;
+    }
+
+    public void setLeftInterPoint(Point leftInterPoint) {
+        this.leftInterPoint = leftInterPoint;
+    }
+
+    public void setRightInterPoint(Point rightInterPoint) {
+        this.rightInterPoint = rightInterPoint;
+    }
+
+    public Point getLeftInterPoint() { return leftInterPoint; }
+
+    public Point getRightInterPoint() { return rightInterPoint; }
 
     public void setEnd(int end) { this.end = end; }
 
