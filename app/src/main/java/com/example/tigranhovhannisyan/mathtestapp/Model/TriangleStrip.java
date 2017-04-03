@@ -53,62 +53,77 @@ public class TriangleStrip implements Serializable{
         }
     }
 
-    public void divideByBasicProblem(int start, int end) {
-
-    }
-
-    private void createLeftStrip(int start) {
+    private TriangleStrip createLeftStrip(int start) {
         List<Triangle> leftTriangles = new ArrayList<>();
 
         for (int i = 0; i < start; i++){
             leftTriangles.add(this.triangles.get(i));
         }
 
-        Triangle rightSideTriangle = leftTriangles.get(leftTriangles.size() - 1);
+        if(leftTriangles.size() > 0){
+            Triangle rightSideTriangle = leftTriangles.get(leftTriangles.size() - 1);
 
-        for (Point node : triangles.get(start).getNodes()) {
-            int index = rightSideTriangle.containsNode(node);
-            if(index != -1) {
-                rightSideTriangle.deleteNode(index);
+            for (Point node : triangles.get(start).getNodes()) {
+                int index = rightSideTriangle.containsNode(node);
+                if(index != -1) {
+                    rightSideTriangle.deleteNode(index);
+                }
             }
+
+            rightSideTriangle.addVertexNodes();
         }
 
-        rightSideTriangle.addVertexNodes();
-        TriangleStrip leftStrip = new TriangleStrip(leftTriangles);
+        return new TriangleStrip(leftTriangles);
     }
 
-    private void createRightStrip(){
-        //ToDo
-    }
+    private TriangleStrip createRightStrip(int end){
+        List<Triangle> rightTriangles = new ArrayList<>();
 
-    public boolean isBasic(){
-        //ToDo
-        for(int i = 0; i < getTriangles().size(); i++) {
-            Triangle triangle = getTriangles().get(i);
-            if(triangle.getNodesCount() == 2) {
-
-            }
+        for (int i = end + 1; i < getTriangles().size(); i++) {
+            rightTriangles.add(this.triangles.get(i));
         }
-        return false;
+
+        if(rightTriangles.size() > 0){
+            Triangle leftSideTriangle = rightTriangles.get(0);
+
+            for (Point node : triangles.get(end).getNodes()) {
+                int index = leftSideTriangle.containsNode(node);
+                if(index != -1) {
+                    leftSideTriangle.deleteNode(index);
+                }
+            }
+
+            leftSideTriangle.addVertexNodes();
+        }
+
+        return new TriangleStrip(rightTriangles);
     }
 
-    public IndexPair findBasicSubproblem() {
+    public boolean isBasicSubProblemPoised(IndexPair indexPair) {
+        if(indexPair.getLength() == 1){
+            return true;
+        } else {
+            //ToDo checkPoisedness
+            return true;
+        }
+    }
+
+    public boolean isPoised() {
+        if(getTriangles().size() == 0){
+            return true;
+        }
+        IndexPair indexPair = findBasicSubproblem();
+        if(indexPair == null || indexPair.isEmpty()){
+            return false;
+        }
+        return isBasicSubProblemPoised(indexPair) && createLeftStrip(indexPair.getStart()).isPoised() && createRightStrip(indexPair.getEnd()).isPoised();
+    }
+
+    public IndexPair find2m2BSubProblem() {
         IndexPair indexPair = new IndexPair();
 
         for(int i = 0; i < getTriangles().size(); i++) {
             Triangle triangle = getTriangles().get(i);
-
-            if(triangle.getNodesCount() > 3) {
-                return null;
-            } else if(triangle.getNodesCount() == 3) {
-                Equation equation = new Equation(triangle.getNodes().get(0), triangle.getNodes().get(1));
-                if(equation.pointSatisfies(triangle.getNodes().get(2))){
-                    return null;
-                } else {
-                    indexPair.setStart(i);
-                    indexPair.setEnd(i);
-                }
-            }
 
             if(triangle.getNodesCount() == 2) {
                 if(indexPair.getStart() != -1) {
@@ -121,6 +136,39 @@ public class TriangleStrip implements Serializable{
             }
         }
         return indexPair;
+    }
+
+    public IndexPair find3BSubProblem() {
+        IndexPair indexPair = new IndexPair();
+
+        for (int i = 0; i < getTriangles().size(); i++){
+            Triangle triangle = getTriangles().get(i);
+            if(triangle.getNodesCount() > 3){
+                return null;
+            } else if(triangle.getNodesCount() == 3){
+                Equation equation = new Equation(triangle.getNodes().get(0), triangle.getNodes().get(1));
+                if(equation.pointSatisfies(triangle.getNodes().get(2))){
+                    return null;
+                } else {
+                    indexPair.setStart(i);
+                    indexPair.setEnd(i);
+                }
+            }
+        }
+
+        return indexPair;
+    }
+
+    public IndexPair findBasicSubproblem() {
+        IndexPair pair = find3BSubProblem();
+        if(pair == null){
+            return null;
+        }
+        if(pair.isEmpty()) {
+            pair = find2m2BSubProblem();
+            return pair;
+        }
+        return pair;
     }
 
     public IndexPair isIntersepted(IndexPair indexPair) {

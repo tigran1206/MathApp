@@ -50,7 +50,19 @@ public class NodesActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         fab.setOnClickListener(view -> {
-            triangleStrip.setNodes(adapter.getPoints());
+            nodes = new ArrayList<Point>() {
+                {
+                    add(new Point(1, 1));
+                    add(new Point(3, 2));
+                    add(new Point(4, 1));
+                    add(new Point(5, 1));
+                    add(new Point(5, 2));
+                    add(new Point(6, 2));
+                    add(new Point(7, 1));
+                }
+            };
+
+            triangleStrip.setNodes(nodes);
             ResultActivity.startActivity(this, triangleStrip);
         });
 
@@ -58,6 +70,7 @@ public class NodesActivity extends AppCompatActivity {
         for (int i = 0; i < triangleStrip.getTriangles().size() + 2; i++) {
             nodes.add(new Point());
         }
+
         adapter = new PointAdapter(nodes, true);
         recyclerView.setAdapter(adapter);
     }

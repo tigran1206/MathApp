@@ -47,21 +47,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private boolean processStrip(TriangleStrip triangleStrip) {
-        IndexPair indexPair = triangleStrip.findBasicSubproblem();
-        if(indexPair == null || indexPair.isEmpty()){
-            return false;
-        }
-        return false;
+        return triangleStrip.isPoised();
     }
-
-    public boolean testRecursion(TriangleStrip triangleStrip){
-        if(triangleStrip.isBasic()) {
-            //ToDo check poisedness of basic subproblem
-            //if basic problem, return poisedness of basic subproblem
-            return true;
-        }
-        return false;
-    }
-
 
 }
