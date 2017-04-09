@@ -9,13 +9,17 @@ import java.util.Locale;
  * Created by Tiko on 2/18/2017.
  */
 
-public class Equation implements Serializable{
-    double coefficient;
-    double offset;
+public class Equation implements Serializable {
+    protected double coefficient;
+    protected double offset;
 
     public double getCoefficient() { return coefficient; }
 
     public double getOffset() { return offset; }
+
+    public Equation(){
+
+    }
 
     public Equation(double coefficient, double offset) {
         this.coefficient = coefficient;
@@ -26,7 +30,7 @@ public class Equation implements Serializable{
         define(p1, p2);
     }
 
-    public void define(Point p1, Point p2){
+    public void define(Point p1, Point p2) {
         coefficient = (p2.y - p1.y) / (p2.x - p1.x);
         offset = p1.y - coefficient * p1.x;
 

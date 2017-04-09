@@ -11,9 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.tigranhovhannisyan.mathtestapp.Model.Equation;
+import com.example.tigranhovhannisyan.mathtestapp.Model.EquationSum;
+import com.example.tigranhovhannisyan.mathtestapp.Model.IndexPair;
 import com.example.tigranhovhannisyan.mathtestapp.Model.Point;
 import com.example.tigranhovhannisyan.mathtestapp.Model.Triangle;
 import com.example.tigranhovhannisyan.mathtestapp.Model.TriangleStrip;
+import com.example.tigranhovhannisyan.mathtestapp.Model.TwoVarEquation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +39,14 @@ public class MainActivity extends AppCompatActivity {
         points = new ArrayList<Point>() {
             {
                 add(new Point(0,0));
-                add(new Point(0,3));
-                add(new Point(3,0));
-                add(new Point(5,3));
-                add(new Point(6,0));
-                add(new Point(8,4));
+                add(new Point(0,4));
+                add(new Point(4,0));
+                add(new Point(6,4));
                 add(new Point(8,0));
+                add(new Point(10,4));
+                add(new Point(12,0));
+                add(new Point(14,4));
+                add(new Point(16,0));
             }
         };
 

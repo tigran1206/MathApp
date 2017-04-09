@@ -9,6 +9,21 @@ import java.io.Serializable;
 public class Point implements Serializable{
     public double x;
     public double y;
+    public double value;
+
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    public void setValue(TwoVarEquation twoVarEquation) {
+        setValue(twoVarEquation.calculate(this));
+    }
+
+    public void setValue(EquationSum equationSum){
+        setValue(equationSum.calculateSum(this));
+    }
+
+    public double getValue() { return value; }
 
     public double getX(){
         return x;

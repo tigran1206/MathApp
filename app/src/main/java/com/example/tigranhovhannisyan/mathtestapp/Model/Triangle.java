@@ -29,6 +29,11 @@ public class Triangle implements Serializable {
         this.vertexes = vertexes;
     }
 
+    public Triangle(Triangle triangle){
+        this.vertexes = new ArrayList<>(triangle.vertexes);
+        this.nodes = new ArrayList<>(triangle.nodes);
+    }
+
     public boolean containsPoint(Point pt)
     {
         double sign1 = MathUtils.sign(pt, getVertex1(), getVertex2());
@@ -56,9 +61,14 @@ public class Triangle implements Serializable {
         nodes.remove(index);
     }
 
-    public void addVertexNodes(){
-        nodes.add(getVertex2());
-        nodes.add(getVertex3());
+    public void addVertexNodes(boolean fromLeft){
+        if(fromLeft){
+            nodes.add(getVertex1());
+            nodes.add(getVertex2());
+        } else {
+            nodes.add(getVertex2());
+            nodes.add(getVertex3());
+        }
     }
 
     public boolean isCollinear() {
@@ -75,6 +85,10 @@ public class Triangle implements Serializable {
             int index = nodes.get(0).x >= nodes.get(1).x ? 0 : 1;
             nodes.set(index, interPoint);
         }
+    }
+
+    public Point getSingleNode(){
+        return nodes.get(0);
     }
 
     public Point getVertex1() {

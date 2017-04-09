@@ -13,11 +13,9 @@ public class MathUtils {
     public static double sign(Point p1, Point p2, Point p3)
     {
         double value = (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y);
-        Log.d("Expression", p1.x + " - " + p3.x + " * " + p2.y + " - " + p3.y + "  -  " + p2.x + " - " + p3.x + " * " + p1.y + " - " + p3.y + " = " + value);
         return value;
     }
 
-    //Todo check zugaher
     public static Point findIntersactionPoint(Equation equation1, Equation equation2) {
         if(equation1.getCoefficient() == equation2.getCoefficient()){
             return null;

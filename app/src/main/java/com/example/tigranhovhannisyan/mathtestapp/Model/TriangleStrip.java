@@ -37,7 +37,7 @@ public class TriangleStrip implements Serializable{
     private void setTrianglesNodes(List<Point> nodes){
         for (int i = 0; i < nodes.size(); i++) {
             Point node = nodes.get(i);
-            node.setLetter("A" + (i + 1) +". ");
+//            node.setLetter("A" + (i + 1) +". ");
             for (int j = 0; j < triangles.size(); j++){
                 Triangle triangle = triangles.get(j);
                 if(triangle.containsPoint(node)){
@@ -57,7 +57,7 @@ public class TriangleStrip implements Serializable{
         List<Triangle> leftTriangles = new ArrayList<>();
 
         for (int i = 0; i < start; i++){
-            leftTriangles.add(this.triangles.get(i));
+            leftTriangles.add(new Triangle(this.triangles.get(i)));
         }
 
         if(leftTriangles.size() > 0){
@@ -70,17 +70,17 @@ public class TriangleStrip implements Serializable{
                 }
             }
 
-            rightSideTriangle.addVertexNodes();
+            rightSideTriangle.addVertexNodes(false);
         }
 
         return new TriangleStrip(leftTriangles);
     }
 
-    private TriangleStrip createRightStrip(int end){
+    private TriangleStrip createRightStrip(int end) {
         List<Triangle> rightTriangles = new ArrayList<>();
 
         for (int i = end + 1; i < getTriangles().size(); i++) {
-            rightTriangles.add(this.triangles.get(i));
+            rightTriangles.add(new Triangle(this.triangles.get(i)));
         }
 
         if(rightTriangles.size() > 0){
@@ -93,18 +93,38 @@ public class TriangleStrip implements Serializable{
                 }
             }
 
-            leftSideTriangle.addVertexNodes();
+            leftSideTriangle.addVertexNodes(true);
         }
 
         return new TriangleStrip(rightTriangles);
     }
 
     public boolean isBasicSubProblemPoised(IndexPair indexPair) {
-        if(indexPair.getLength() == 1){
+        if(indexPair.getLength() == 1) {
             return true;
         } else {
-            //ToDo checkPoisedness
-            return true;
+            Triangle startTriangle = getTriangles().get(indexPair.getStart());
+            TwoVarEquation twoVarEquation = new TwoVarEquation(startTriangle.getNodes().get(0), startTriangle.getNodes().get(1), startTriangle.getVertex1());
+
+            EquationSum equationSum = null;
+
+            for (int i = indexPair.getStart() + 1; i <= indexPair.getEnd(); i++) {
+                Triangle triangle = getTriangles().get(i);
+                if(equationSum == null){
+                    triangle.getVertex1().setValue(twoVarEquation);
+                    triangle.getVertex2().setValue(twoVarEquation);
+                } else {
+                    triangle.getVertex1().setValue(equationSum);
+                    triangle.getVertex2().setValue(equationSum);
+                }
+
+                TwoVarEquation p1 = new TwoVarEquation(triangle.getSingleNode(), triangle.getVertex2(), triangle.getVertex1());
+                TwoVarEquation p2 = new TwoVarEquation(triangle.getSingleNode(), triangle.getVertex1(), triangle.getVertex2());
+                equationSum = new EquationSum(p1, p2, triangle.getVertex1().getValue(), triangle.getVertex2().getValue());
+            }
+
+            return equationSum.calculateSum(getTriangles().get(indexPair.getEnd()).getNodes().get(1)) == 0;
+
         }
     }
 
@@ -145,9 +165,8 @@ public class TriangleStrip implements Serializable{
             Triangle triangle = getTriangles().get(i);
             if(triangle.getNodesCount() > 3){
                 return null;
-            } else if(triangle.getNodesCount() == 3){
-                Equation equation = new Equation(triangle.getNodes().get(0), triangle.getNodes().get(1));
-                if(equation.pointSatisfies(triangle.getNodes().get(2))){
+            } else if(triangle.getNodesCount() == 3) {
+                if(triangle.isCollinear()){
                     return null;
                 } else {
                     indexPair.setStart(i);
@@ -202,10 +221,8 @@ public class TriangleStrip implements Serializable{
         if(indexPair.getLength() == 0) {
             Triangle triangle = getTriangles().get(indexPair.getEnd());
             if(triangle.isCollinear()) {
-                //the problem finished with false
                 return null;
             } else {
-                //return end, start
                 return indexPair;
             }
         }
