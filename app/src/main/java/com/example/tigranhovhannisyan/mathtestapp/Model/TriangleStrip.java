@@ -226,7 +226,7 @@ public class TriangleStrip implements Serializable{
                 return indexPair;
             }
         }
-        //we have a case with 2+2
+
         IndexPair interPair = isIntersepted(indexPair);
         if(interPair.isEmpty()) {
             return indexPair;
@@ -235,7 +235,7 @@ public class TriangleStrip implements Serializable{
                 getTriangles().get(indexPair.getStart()).performLineTransformation(interPair.getLeftInterPoint());
                 indexPair.increment();
             }
-            if(indexPair.getEnd() != -1) {
+            if(indexPair.getEnd() != -1 && !(indexPair.getLength() == 1 && interPair.getStart() == -1)) {
                 getTriangles().get(indexPair.getEnd()).performLineTransformation(interPair.getRightInterPoint());
                 indexPair.decrement();
             }
