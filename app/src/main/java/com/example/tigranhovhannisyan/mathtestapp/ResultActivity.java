@@ -46,8 +46,12 @@ public class ResultActivity extends AppCompatActivity {
         processStrip(triangleStrip);
     }
 
-    private boolean processStrip(TriangleStrip triangleStrip) {
-        return triangleStrip.isPoised();
+    private void processStrip(TriangleStrip triangleStrip) {
+        Counter.getInstance().setCount(true);
+        Log.d("result", String.valueOf(triangleStrip.isPoised()));
+        Log.d("divide count", String.valueOf(Counter.getInstance().getDivideCount()));
+        Log.d("sum count", String.valueOf(Counter.getInstance().getSumCount()));
+        Log.d("multiple count", String.valueOf(Counter.getInstance().getMultipleCount()));
     }
 
 }

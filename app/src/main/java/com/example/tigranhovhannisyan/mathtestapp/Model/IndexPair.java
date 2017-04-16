@@ -1,5 +1,7 @@
 package com.example.tigranhovhannisyan.mathtestapp.Model;
 
+import com.example.tigranhovhannisyan.mathtestapp.Counter;
+
 /**
  * Created by tigran.hovhannisyan on 3/31/2017.
  */
@@ -20,15 +22,19 @@ public class IndexPair {
         return start == -1 && end == -1;
     }
 
-    public int getLength(){
+    public int getLength() {
+        Counter.getInstance().setSumCount(1);
+
         return end - start;
     }
 
     public void increment(){
+        Counter.getInstance().setSumCount(1);
         start ++;
     }
 
-    public void decrement(){
+    public void decrement() {
+        Counter.getInstance().setSumCount(1);
         end --;
     }
 

@@ -43,7 +43,7 @@ public class Triangle implements Serializable {
         return (sign1 >= 0 && sign2 >= 0 && sign3 >= 0) || (sign1 <= 0 && sign2 <= 0 && sign3 <= 0);
     }
 
-    public void addNode(Point node){
+    public void addNode(Point node) {
         nodes.add(node);
     }
 
@@ -80,9 +80,23 @@ public class Triangle implements Serializable {
         }
     }
 
-    public void performLineTransformation(Point interPoint) {
-        if(nodes.size() == 2){
-            nodes.set(0, interPoint);
+    public void performLineTransformation(Point interPoint, boolean left) {
+        if(nodes.size() == 2) {
+            int index;
+            if(left){
+                index = nodes.get(0).x >= nodes.get(1).x ? 0 : 1;
+            } else {
+                index = nodes.get(0).x <= nodes.get(1).x ? 0 : 1;
+            }
+            nodes.set(index, interPoint);
+        }
+    }
+
+    public boolean checkNodeInSide(Point node, boolean left){
+        if(left){
+            return node.x >= getVertex2().x && node.x <= getVertex3().x;
+        } else {
+            return node.x >= getVertex1().x && node.x <= getVertex2().x;
         }
     }
 

@@ -43,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
                 add(new Point(4,0));
                 add(new Point(6,4));
                 add(new Point(8,0));
-                add(new Point(10,4));
-                add(new Point(12,0));
-                add(new Point(14,4));
-                add(new Point(16,0));
+//                add(new Point(10,4));
+//                add(new Point(12,0));
+//                add(new Point(14,4));
+//                add(new Point(16,0));
             }
         };
 

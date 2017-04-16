@@ -1,5 +1,7 @@
 package com.example.tigranhovhannisyan.mathtestapp.Model;
 
+import com.example.tigranhovhannisyan.mathtestapp.Counter;
+
 /**
  * Created by Arno on 4/9/2017.
  */
@@ -22,7 +24,9 @@ public class EquationSum {
         this.c2 = c2;
     }
 
-    public double calculateSum(Point p){
+    public double calculateSum(Point p) {
+        Counter.getInstance().setSumCount(1);
+        Counter.getInstance().setMultipleCount(2);
         return c1 * twoVarEquation1.calculate(p) + c2 * twoVarEquation2.calculate(p);
     }
 

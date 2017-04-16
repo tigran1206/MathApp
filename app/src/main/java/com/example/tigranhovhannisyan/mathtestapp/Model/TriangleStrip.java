@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.tigranhovhannisyan.mathtestapp.MathUtils;
 
 import java.io.Serializable;
+import java.security.cert.PolicyNode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,7 +101,7 @@ public class TriangleStrip implements Serializable{
     }
 
     public boolean isBasicSubProblemPoised(IndexPair indexPair) {
-        if(indexPair.getLength() == 1) {
+        if(indexPair.getLength() == 0 || indexPair.getLength() == 2) {
             return true;
         } else {
             Triangle startTriangle = getTriangles().get(indexPair.getStart());
@@ -158,6 +159,7 @@ public class TriangleStrip implements Serializable{
         return indexPair;
     }
 
+    //Finding first 3 nodes triangle
     public IndexPair find3BSubProblem() {
         IndexPair indexPair = new IndexPair();
 
@@ -171,6 +173,7 @@ public class TriangleStrip implements Serializable{
                 } else {
                     indexPair.setStart(i);
                     indexPair.setEnd(i);
+                    return indexPair;
                 }
             }
         }
@@ -201,19 +204,20 @@ public class TriangleStrip implements Serializable{
 
         Point interPoint = MathUtils.findIntersactionPoint(equation1, equation2);
         //insist of calling containsPoint method we can check it with another simple algorithm
-        if(interPoint != null && leftTriangle.containsPoint(interPoint)) {
+        if(interPoint != null && leftTriangle.checkNodeInSide(interPoint, true)) {
             pair.setStart(indexPair.getStart());
             pair.setLeftInterPoint(interPoint);
-        } else {
-            equation1.define(rightTriangle.getVertex1(), rightTriangle.getVertex2());
-            equation2.define(rightTriangle.getNodes().get(0), rightTriangle.getNodes().get(1));
-
-            interPoint = MathUtils.findIntersactionPoint(equation1, equation2);
-            if(interPoint != null && rightTriangle.containsPoint(interPoint)) {
-                pair.setEnd(indexPair.getEnd());
-                pair.setRightInterPoint(interPoint);
-            }
         }
+
+        equation1.define(rightTriangle.getVertex1(), rightTriangle.getVertex2());
+        equation2.define(rightTriangle.getNodes().get(0), rightTriangle.getNodes().get(1));
+
+        interPoint = MathUtils.findIntersactionPoint(equation1, equation2);
+        if(interPoint != null && rightTriangle.checkNodeInSide(interPoint, false)) {
+            pair.setEnd(indexPair.getEnd());
+            pair.setRightInterPoint(interPoint);
+        }
+
         return pair;
     }
 
@@ -226,18 +230,20 @@ public class TriangleStrip implements Serializable{
                 return indexPair;
             }
         }
-
+        //Todo check adding node existence in corresponding triangle
         IndexPair interPair = isIntersepted(indexPair);
         if(interPair.isEmpty()) {
             return indexPair;
         } else {
             if(interPair.getStart() != -1) {
-                getTriangles().get(indexPair.getStart()).performLineTransformation(interPair.getLeftInterPoint());
+                getTriangles().get(indexPair.getStart()).performLineTransformation(interPair.getLeftInterPoint(), true);
                 indexPair.increment();
+                getTriangles().get(indexPair.getStart()).addNode(interPair.getLeftInterPoint());
             }
-            if(indexPair.getEnd() != -1 && !(indexPair.getLength() == 1 && interPair.getStart() == -1)) {
-                getTriangles().get(indexPair.getEnd()).performLineTransformation(interPair.getRightInterPoint());
+            if(interPair.getEnd() != -1 && !(indexPair.getLength() == 1 && interPair.getStart() == -1)) {
+                getTriangles().get(indexPair.getEnd()).performLineTransformation(interPair.getRightInterPoint(), false);
                 indexPair.decrement();
+                getTriangles().get(indexPair.getEnd()).addNode(interPair.getRightInterPoint());
             }
             return extractBasicSubProblem(indexPair);
         }
