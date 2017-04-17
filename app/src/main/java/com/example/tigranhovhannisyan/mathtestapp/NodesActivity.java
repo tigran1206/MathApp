@@ -1,8 +1,10 @@
 package com.example.tigranhovhannisyan.mathtestapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,12 +28,12 @@ public class NodesActivity extends AppCompatActivity {
     private TriangleStrip triangleStrip;
     List<Point> nodes;
 
-    public static void startActivity(Activity activity, TriangleStrip strip){
-        Intent intent = new Intent(activity, NodesActivity.class);
+    public static void startActivity(Context context, TriangleStrip strip){
+        Intent intent = new Intent(context, NodesActivity.class);
 
         intent.putExtra(TriangleStrip.key, strip);
 
-        activity.startActivity(intent);
+        context.startActivity(intent);
     }
 
     @Override
@@ -52,20 +54,17 @@ public class NodesActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
             nodes = new ArrayList<Point>() {
                 {
-                    add(new Point(0,2));
-                    add(new Point(4,0));
-                    add(new Point(3,3));
-                    add(new Point(6,4));
-                    add(new Point(8,0));
-//                    add(new Point(9,1));
-//                    add(new Point(11.9,3));
-//                    add(new Point(13,1));
-//                    add(new Point(15,2));
+                    add(new Point(3,1));
+                    add(new Point(4,2));
+                    add(new Point(5,3));
+                    add(new Point(6.5,1.5));
+                    add(new Point(8,2));
+                    add(new Point(9,0));
                 }
             };
 
             triangleStrip.setNodes(nodes);
-            ResultActivity.startActivity(this, triangleStrip);
+            ResultActivity.startActivity(getApplicationContext(), triangleStrip);
         });
 
         titleTv.setText(getString(R.string.title_text).replace("count", String.valueOf(triangleStrip.getTriangles().size() + 2)));

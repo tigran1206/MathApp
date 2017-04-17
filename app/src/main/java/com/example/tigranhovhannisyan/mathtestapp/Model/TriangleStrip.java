@@ -38,7 +38,7 @@ public class TriangleStrip implements Serializable{
     private void setTrianglesNodes(List<Point> nodes){
         for (int i = 0; i < nodes.size(); i++) {
             Point node = nodes.get(i);
-//            node.setLetter("A" + (i + 1) +". ");
+            node.setLetter("A" + (i + 1) +". ");
             for (int j = 0; j < triangles.size(); j++){
                 Triangle triangle = triangles.get(j);
                 if(triangle.containsPoint(node)){
@@ -124,7 +124,7 @@ public class TriangleStrip implements Serializable{
                 equationSum = new EquationSum(p1, p2, triangle.getVertex1().getValue(), triangle.getVertex2().getValue());
             }
 
-            return equationSum.calculateSum(getTriangles().get(indexPair.getEnd()).getNodes().get(1)) == 0;
+            return equationSum.calculateSum(getTriangles().get(indexPair.getEnd()).getNodes().get(1)) != 0;
 
         }
     }
@@ -148,15 +148,38 @@ public class TriangleStrip implements Serializable{
 
             if(triangle.getNodesCount() == 2) {
                 if(indexPair.getStart() != -1) {
-                    indexPair.setEnd(i);
-                    return extractBasicSubProblem(indexPair);
+                    if(checkInteriorSide(i, false)){
+                        indexPair.setEnd(i);
+                        return extractBasicSubProblem(indexPair);
+                    } else break;
                 }
-                indexPair.setStart(i);
+                if(checkInteriorSide(i, true)){
+                    indexPair.setStart(i);
+                }
             } else if(triangle.getNodesCount() != 1){
                 indexPair.release();
             }
         }
-        return indexPair;
+        return null;
+    }
+
+    private boolean checkInteriorSide(int index, boolean isLeft){
+        Triangle first = getTriangles().get(index);
+        Triangle second;
+
+        if(isLeft){
+            second = getTriangles().get(index + 1);
+        } else {
+            second = getTriangles().get(index - 1);
+        }
+
+        for (Point node : first.getNodes()) {
+            if(second.containsNode(node) != -1){
+                return false;
+            }
+        }
+
+        return true;
     }
 
     //Finding first 3 nodes triangle
@@ -240,7 +263,7 @@ public class TriangleStrip implements Serializable{
                 indexPair.increment();
                 getTriangles().get(indexPair.getStart()).addNode(interPair.getLeftInterPoint());
             }
-            if(interPair.getEnd() != -1 && !(indexPair.getLength() == 1 && interPair.getStart() == -1)) {
+            if(interPair.getEnd() != -1 && !(indexPair.getLength() == 0 && interPair.getStart() != -1)) {
                 getTriangles().get(indexPair.getEnd()).performLineTransformation(interPair.getRightInterPoint(), false);
                 indexPair.decrement();
                 getTriangles().get(indexPair.getEnd()).addNode(interPair.getRightInterPoint());

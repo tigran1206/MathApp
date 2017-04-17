@@ -38,15 +38,12 @@ public class MainActivity extends AppCompatActivity {
 
         points = new ArrayList<Point>() {
             {
-                add(new Point(0,0));
-                add(new Point(0,4));
-                add(new Point(4,0));
-                add(new Point(6,4));
-                add(new Point(8,0));
-//                add(new Point(10,4));
-//                add(new Point(12,0));
-//                add(new Point(14,4));
-//                add(new Point(16,0));
+                add(new Point(2,0));
+                add(new Point(4,4));
+                add(new Point(5,0));
+                add(new Point(7,4));
+                add(new Point(9,0));
+                add(new Point(11,4));
             }
         };
 
@@ -85,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         fab = (FloatingActionButton)findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
             TriangleStrip triangleStrip = new TriangleStrip(createRectangles(pointAdapter.getPoints()));
-            NodesActivity.startActivity(this, triangleStrip);
+            NodesActivity.startActivity(getApplicationContext(), triangleStrip);
         });
 
         recyclerView.setAdapter(pointAdapter);
