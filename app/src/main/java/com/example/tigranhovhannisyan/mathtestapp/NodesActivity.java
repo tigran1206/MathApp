@@ -1,8 +1,10 @@
 package com.example.tigranhovhannisyan.mathtestapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,12 +28,12 @@ public class NodesActivity extends AppCompatActivity {
     private TriangleStrip triangleStrip;
     List<Point> nodes;
 
-    public static void startActivity(Activity activity, TriangleStrip strip){
-        Intent intent = new Intent(activity, NodesActivity.class);
+    public static void startActivity(Context context, TriangleStrip strip){
+        Intent intent = new Intent(context, NodesActivity.class);
 
         intent.putExtra(TriangleStrip.key, strip);
 
-        activity.startActivity(intent);
+        context.startActivity(intent);
     }
 
     @Override
@@ -50,6 +52,7 @@ public class NodesActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         fab.setOnClickListener(view -> {
+
             nodes = new ArrayList<Point>() {
                 {
                     add(new Point(0,3));
@@ -66,7 +69,7 @@ public class NodesActivity extends AppCompatActivity {
             };
 
             triangleStrip.setNodes(nodes);
-            ResultActivity.startActivity(this, triangleStrip);
+            ResultActivity.startActivity(getApplicationContext(), triangleStrip);
         });
 
         titleTv.setText(getString(R.string.title_text).replace("count", String.valueOf(triangleStrip.getTriangles().size() + 2)));

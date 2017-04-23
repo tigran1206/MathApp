@@ -17,13 +17,22 @@ public class TwoVarEquation extends Equation {
         Counter.getInstance().setDivideCount(1);
 
         //Todo x = a bug
-        multiplier = 1 / (p3.y - coefficient * p3.x - offset);
+        if(coefficient != null){
+            multiplier = 1 / (p3.y - coefficient * p3.x - offset);
+        } else {
+            multiplier = 1 / (p3.y - 0 * p3.x - offset);
+        }
     }
 
     public double calculate(Point point) {
         Counter.getInstance().setSumCount(2);
         Counter.getInstance().setMultipleCount(2);
 
-        return multiplier * (point.y - coefficient * point.x - offset);
+        if(coefficient != null){
+            return multiplier * (point.y - coefficient * point.x - offset);
+        } else {
+            return multiplier * (point.y - 0 * point.x - offset);
+        }
+
     }
 }

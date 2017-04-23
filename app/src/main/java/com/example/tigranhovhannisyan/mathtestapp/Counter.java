@@ -38,6 +38,12 @@ public class Counter {
         }
     }
 
+    public void release(){
+        sumCount = 0;
+        multipleCount = 0;
+        divideCount = 0;
+    }
+
     public int getDivideCount() {
         return divideCount;
     }

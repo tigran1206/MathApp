@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 //        for (int i = 0; i < 3; i++){
 //            points.add(new Point());
 //        }
+
         pointAdapter = new PointAdapter(points, false);
 
         recyclerView = (RecyclerView)findViewById(R.id.recycler);
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         fab = (FloatingActionButton)findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
             TriangleStrip triangleStrip = new TriangleStrip(createRectangles(pointAdapter.getPoints()));
-            NodesActivity.startActivity(this, triangleStrip);
+            NodesActivity.startActivity(getApplicationContext(), triangleStrip);
         });
 
         recyclerView.setAdapter(pointAdapter);
