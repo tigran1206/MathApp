@@ -36,21 +36,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        points = new ArrayList<Point>() {
-            {
-                add(new Point(2,0));
-                add(new Point(4,4));
-                add(new Point(5,0));
-                add(new Point(7,4));
-                add(new Point(9,0));
-                add(new Point(11,4));
-            }
-        };
+//        points = new ArrayList<Point>() {
+//            {
+//                add(new Point(2,0));
+//                add(new Point(4,4));
+//                add(new Point(5,0));
+//                add(new Point(7,4));
+//                add(new Point(9,0));
+//                add(new Point(11,4));
+//            }
+//        };
 
-//        points = new ArrayList<>();
-//        for (int i = 0; i < 3; i++){
-//            points.add(new Point());
-//        }
+        points = new ArrayList<>();
+        for (int i = 0; i < 3; i++){
+            points.add(new Point());
+        }
         pointAdapter = new PointAdapter(points, false);
 
         recyclerView = (RecyclerView)findViewById(R.id.recycler);

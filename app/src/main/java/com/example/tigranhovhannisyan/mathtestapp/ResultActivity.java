@@ -54,9 +54,9 @@ public class ResultActivity extends AppCompatActivity {
                 Counter.getInstance().setCount(true);
                 boolean poised = triangleStrip.isPoised();
                 String message = "Poised: " + String.valueOf(poised) + "\n" +
-                        "Sums Count: " + String.valueOf(Counter.getInstance().getSumCount()) + "\n" +
-                        "Multiplications Count: " + String.valueOf(Counter.getInstance().getMultipleCount()) + "\n" +
-                        "Divisions Count: " + String.valueOf(Counter.getInstance().getDivideCount()) + "\n";
+                        "Sums count: " + String.valueOf(Counter.getInstance().getSumCount()) + "\n" +
+                        "Multiplications count: " + String.valueOf(Counter.getInstance().getMultipleCount()) + "\n" +
+                        "Divisions count: " + String.valueOf(Counter.getInstance().getDivideCount()) + "\n";
                 Counter.getInstance().setCount(false);
                 Counter.getInstance().release();
                 if(poised) {

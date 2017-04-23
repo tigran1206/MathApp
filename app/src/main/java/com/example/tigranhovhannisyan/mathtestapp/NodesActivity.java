@@ -52,16 +52,16 @@ public class NodesActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         fab.setOnClickListener(view -> {
-            nodes = new ArrayList<Point>() {
-                {
-                    add(new Point(3,1));
-                    add(new Point(4,2));
-                    add(new Point(5,3));
-                    add(new Point(6.5,1.5));
-                    add(new Point(8,2));
-                    add(new Point(9,0));
-                }
-            };
+//            nodes = new ArrayList<Point>() {
+//                {
+//                    add(new Point(3,1));
+//                    add(new Point(4,2));
+//                    add(new Point(5,3));
+//                    add(new Point(6.5,1.5));
+//                    add(new Point(8,2));
+//                    add(new Point(9,0));
+//                }
+//            };
 
             triangleStrip.setNodes(nodes);
             ResultActivity.startActivity(getApplicationContext(), triangleStrip);
