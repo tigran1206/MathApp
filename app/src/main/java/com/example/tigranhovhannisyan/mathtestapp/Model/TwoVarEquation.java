@@ -6,7 +6,7 @@ import com.example.tigranhovhannisyan.mathtestapp.Counter;
  * Created by Arno on 4/8/2017.
  */
 
-public class TwoVarEquation extends Equation{
+public class TwoVarEquation extends Equation {
     double multiplier;
 
     public TwoVarEquation(Point p1, Point p2, Point p3) {

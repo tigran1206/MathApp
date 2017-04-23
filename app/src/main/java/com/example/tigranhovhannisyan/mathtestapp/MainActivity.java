@@ -39,14 +39,15 @@ public class MainActivity extends AppCompatActivity {
         points = new ArrayList<Point>() {
             {
                 add(new Point(0,0));
-                add(new Point(0,4));
+                add(new Point(0,6));
                 add(new Point(4,0));
-                add(new Point(6,4));
+                add(new Point(8,8));
                 add(new Point(8,0));
-//                add(new Point(10,4));
-//                add(new Point(12,0));
-//                add(new Point(14,4));
-//                add(new Point(16,0));
+                add(new Point(11,6));
+                add(new Point(15,0));
+                add(new Point(17,8));
+                add(new Point(17,0));
+                add(new Point(21,0));
             }
         };
 

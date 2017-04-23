@@ -52,15 +52,16 @@ public class NodesActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
             nodes = new ArrayList<Point>() {
                 {
-                    add(new Point(0,2));
-                    add(new Point(4,0));
-                    add(new Point(3,3));
-                    add(new Point(6,4));
-                    add(new Point(8,0));
-//                    add(new Point(9,1));
-//                    add(new Point(11.9,3));
-//                    add(new Point(13,1));
-//                    add(new Point(15,2));
+                    add(new Point(0,3));
+                    add(new Point(2,0));
+                    add(new Point(3,6));
+                    add(new Point(6,1));
+                    add(new Point(7,4));
+                    add(new Point(9,6));
+                    add(new Point(12,3));
+                    add(new Point(15,7));
+                    add(new Point(16,2));
+                    add(new Point(18,3));
                 }
             };
 
